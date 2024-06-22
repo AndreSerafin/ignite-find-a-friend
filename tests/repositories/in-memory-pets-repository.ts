@@ -7,4 +7,10 @@ export class InMemoryPetsRepository implements PetsRepository {
   async create(pet: Pet): Promise<void> {
     this.items.push(pet)
   }
+
+  async findManyByOrgId(orgId: string): Promise<Pet[]> {
+    const pets = this.items.filter((pet) => pet.authorId.toString() === orgId)
+
+    return pets
+  }
 }

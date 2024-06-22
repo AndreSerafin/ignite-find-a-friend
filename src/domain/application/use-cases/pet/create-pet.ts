@@ -1,8 +1,8 @@
-import { PetsRepository } from '../../repositories/pets-repository'
 import { Pet } from '@/domain/enterprise/entities/pet'
 import { UniqueEntityId } from '@/core/unique-entity-id'
+import { PetsRepository } from '../../repositories/pets-repository'
 
-interface CreatePetsUseCaseRequest {
+interface CreatePetUseCaseRequest {
   name: string
   specie: string
   age: number
@@ -14,7 +14,7 @@ interface CreatePetsUseCaseRequest {
   authorId: string
 }
 
-interface CreatePetsUseCaseResponse {
+interface CreatePetUseCaseResponse {
   pet: Pet
 }
 
@@ -31,7 +31,7 @@ export class CreatePetUseCase {
     size,
     specie,
     breed,
-  }: CreatePetsUseCaseRequest): Promise<CreatePetsUseCaseResponse> {
+  }: CreatePetUseCaseRequest): Promise<CreatePetUseCaseResponse> {
     const pet = Pet.create({
       about,
       age,

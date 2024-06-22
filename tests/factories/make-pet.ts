@@ -6,7 +6,7 @@ export function makePet(override: Partial<PetProps> = {}, id?: UniqueEntityId) {
   const pet = Pet.create(
     {
       authorId: new UniqueEntityId(),
-      age: faker.number.int(),
+      age: faker.number.int({ min: 0, max: 20 }),
       about: faker.lorem.paragraph(1),
       breed: faker.lorem.word(),
       energyLevel: faker.number.int({ min: 0, max: 5 }),

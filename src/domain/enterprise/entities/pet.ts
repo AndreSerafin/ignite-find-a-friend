@@ -33,6 +33,10 @@ export class Pet extends Entity<PetProps> {
     return pet
   }
 
+  get authorId() {
+    return this.props.authorId
+  }
+
   get name() {
     return this.props.name
   }
@@ -89,6 +93,14 @@ export class Pet extends Entity<PetProps> {
 
   get excerptAbout() {
     return this.props.about.substring(0, 120).trimEnd().concat('...')
+  }
+
+  get createdAt() {
+    return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
   }
 
   private touch() {
