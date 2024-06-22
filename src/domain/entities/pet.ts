@@ -1,5 +1,6 @@
 import { Entity } from '@/core/entity'
-import { City } from './city'
+import { UniqueEntityId } from '@/core/unique-entity-id'
+import { Optional } from '@/@types/optional'
 
 interface PetProps {
   name: string
@@ -9,10 +10,20 @@ interface PetProps {
   height: number
   breed?: string
   color?: string
-  city: City
+  cityId: UniqueEntityId
+  orgId: UniqueEntityId
 
-  createdAt: string
-  updatedAt?: string
+  createdAt: Date
+  updatedAt?: Date
 }
 
-export class Pet extends Entity<PetProps> {}
+export class Pet extends Entity<PetProps> {
+  create(props: Optional<PetProps, 'createdAt'>, id: UniqueEntityId) {
+    const pet = new Pet(
+      { ...props, createdAt: props.createdAt ?? new Date() },
+      id,
+    )
+
+    return pet
+  }
+}
