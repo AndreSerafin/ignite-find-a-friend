@@ -1,14 +1,18 @@
 import { Org } from '@/domain/enterprise/entities/org'
 import { OrgsRepository } from '../../repositories/orgs-repository'
+import { Either, right } from '@/core/either'
 
 interface FetchOrgsNearbyIdUseCaseRequest {
   currentLatitude: number
   currentLongitude: number
 }
 
-interface FetchOrgsNearbyIdUseCaseResponse {
-  orgs: Org[]
-}
+type FetchOrgsNearbyIdUseCaseResponse = Either<
+  null,
+  {
+    orgs: Org[]
+  }
+>
 
 export class FetchOrgsNearbyIdUseCase {
   constructor(private orgsRepository: OrgsRepository) {}
@@ -22,6 +26,6 @@ export class FetchOrgsNearbyIdUseCase {
       longitude: currentLongitude,
     })
 
-    return { orgs }
+    return right({ orgs })
   }
 }

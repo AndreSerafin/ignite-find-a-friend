@@ -1,5 +1,6 @@
 import { Org } from '@/domain/enterprise/entities/org'
 import { OrgsRepository } from '../../repositories/orgs-repository'
+import { Either, right } from '@/core/either'
 
 interface CreateOrgUseCaseRequest {
   name: string
@@ -15,9 +16,12 @@ interface CreateOrgUseCaseRequest {
   longitude: number
 }
 
-interface CreateOrgUseCaseResponse {
-  org: Org
-}
+type CreateOrgUseCaseResponse = Either<
+  null,
+  {
+    org: Org
+  }
+>
 
 export class CreateOrgUseCase {
   constructor(private orgsRepository: OrgsRepository) {}
@@ -29,6 +33,6 @@ export class CreateOrgUseCase {
 
     await this.orgsRepository.create(org)
 
-    return { org }
+    return right({ org })
   }
 }

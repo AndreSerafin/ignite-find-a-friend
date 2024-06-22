@@ -1,6 +1,7 @@
 import { Pet } from '@/domain/enterprise/entities/pet'
 import { UniqueEntityId } from '@/core/unique-entity-id'
 import { PetsRepository } from '../../repositories/pets-repository'
+import { Either, right } from '@/core/either'
 
 interface CreatePetUseCaseRequest {
   name: string
@@ -14,9 +15,12 @@ interface CreatePetUseCaseRequest {
   authorId: string
 }
 
-interface CreatePetUseCaseResponse {
-  pet: Pet
-}
+type CreatePetUseCaseResponse = Either<
+  null,
+  {
+    pet: Pet
+  }
+>
 
 export class CreatePetUseCase {
   constructor(private petsRepository: PetsRepository) {}
@@ -46,6 +50,6 @@ export class CreatePetUseCase {
 
     await this.petsRepository.create(pet)
 
-    return { pet }
+    return right({ pet })
   }
 }

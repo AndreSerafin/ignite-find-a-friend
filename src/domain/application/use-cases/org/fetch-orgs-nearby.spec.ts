@@ -21,11 +21,12 @@ describe('Fetch nearby orgs use case', () => {
       makeOrg({ latitude: -3.119028, longitude: -60.021731 }),
     )
 
-    const { orgs } = await sut.execute({
+    const result = await sut.execute({
       currentLatitude: -23.55052,
       currentLongitude: -46.633308,
     })
 
-    expect(orgs).toHaveLength(3)
+    expect(result.isRight()).toBeTruthy()
+    expect(result.value?.orgs).toHaveLength(3)
   })
 })
