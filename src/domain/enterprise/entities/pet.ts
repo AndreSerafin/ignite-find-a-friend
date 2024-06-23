@@ -37,6 +37,14 @@ export class Pet extends Entity<PetProps> {
     return this.props.authorId
   }
 
+  get age() {
+    return this.props.age
+  }
+
+  set age(age: number) {
+    this.props.age = age
+  }
+
   get name() {
     return this.props.name
   }
@@ -79,6 +87,15 @@ export class Pet extends Entity<PetProps> {
 
   set energyLevel(energyLevel: number) {
     this.props.energyLevel = energyLevel
+    this.touch()
+  }
+
+  get environment() {
+    return this.props.environment
+  }
+
+  set environment(environment: string) {
+    this.props.environment = environment
     this.touch()
   }
 

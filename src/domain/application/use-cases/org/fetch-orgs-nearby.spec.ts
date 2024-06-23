@@ -24,6 +24,7 @@ describe('Fetch nearby orgs use case', () => {
     const result = await sut.execute({
       currentLatitude: -23.55052,
       currentLongitude: -46.633308,
+      page: 1,
     })
 
     expect(result.isRight()).toBeTruthy()

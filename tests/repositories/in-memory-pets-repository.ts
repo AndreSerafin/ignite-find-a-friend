@@ -1,4 +1,8 @@
-import { PetsRepository } from '@/domain/application/repositories/pets-repository'
+import { PaginationParams } from '@/core/repositories/pagination-params'
+import {
+  FilterParams,
+  PetsRepository,
+} from '@/domain/application/repositories/pets-repository'
 import { Pet } from '@/domain/enterprise/entities/pet'
 
 export class InMemoryPetsRepository implements PetsRepository {
@@ -8,8 +12,29 @@ export class InMemoryPetsRepository implements PetsRepository {
     this.items.push(pet)
   }
 
-  async findManyByOrgId(orgId: string): Promise<Pet[]> {
-    const pets = this.items.filter((item) => item.authorId.toString() === orgId)
+  async findManyByOrgId(
+    orgId: string,
+    { page }: PaginationParams,
+    filterParams: FilterParams = {},
+  ): Promise<Pet[]> {
+    const { age, breed, energyLevel, environment, search, size, specie } =
+      filterParams
+
+    const filters = (item: Pet) =>
+      (age !== undefined ? item.age === age : true) &&
+      (breed ? item.breed === breed : true) &&
+      (energyLevel !== undefined ? item.energyLevel === energyLevel : true) &&
+      (environment ? item.environment === environment : true) &&
+      (search
+        ? item.name.includes(search) || item.about.includes(search)
+        : true) &&
+      (size !== undefined ? item.size === size : true) &&
+      (specie ? item.specie === specie : true)
+
+    const pets = this.items
+      .filter((item) => item.authorId.toString() === orgId)
+      .filter(filters)
+      .slice((page - 1) * 20, page * 20)
 
     return pets
   }

@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Org } from '@/domain/enterprise/entities/org'
 
 export interface FindManyNearbyParams {
@@ -8,5 +9,8 @@ export interface FindManyNearbyParams {
 export interface OrgsRepository {
   create(org: Org): Promise<void>
 
-  findManyNearby(findManyNearbyParams: FindManyNearbyParams): Promise<Org[]>
+  findManyNearby(
+    findManyNearbyParams: FindManyNearbyParams,
+    params: PaginationParams,
+  ): Promise<Org[]>
 }

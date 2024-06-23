@@ -5,6 +5,7 @@ import { Either, right } from '@/core/either'
 interface FetchOrgsNearbyIdUseCaseRequest {
   currentLatitude: number
   currentLongitude: number
+  page: number
 }
 
 type FetchOrgsNearbyIdUseCaseResponse = Either<
@@ -20,11 +21,15 @@ export class FetchOrgsNearbyIdUseCase {
   async execute({
     currentLatitude,
     currentLongitude,
+    page,
   }: FetchOrgsNearbyIdUseCaseRequest): Promise<FetchOrgsNearbyIdUseCaseResponse> {
-    const orgs = await this.orgsRepository.findManyNearby({
-      latitude: currentLatitude,
-      longitude: currentLongitude,
-    })
+    const orgs = await this.orgsRepository.findManyNearby(
+      {
+        latitude: currentLatitude,
+        longitude: currentLongitude,
+      },
+      { page },
+    )
 
     return right({ orgs })
   }
