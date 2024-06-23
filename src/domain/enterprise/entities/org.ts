@@ -4,6 +4,8 @@ import { Optional } from '@/@types/optional'
 
 export interface OrgProps {
   name: string
+  email: string
+  password: string
   address: string
   whatsapp: string
   authorName: string
@@ -34,6 +36,24 @@ export class Org extends Entity<OrgProps> {
 
   set name(name: string) {
     this.props.name = name
+    this.touch()
+  }
+
+  get email() {
+    return this.props.email
+  }
+
+  set email(email: string) {
+    this.props.email = email
+    this.touch()
+  }
+
+  get password() {
+    return this.props.password
+  }
+
+  set password(password: string) {
+    this.props.password = password
     this.touch()
   }
 

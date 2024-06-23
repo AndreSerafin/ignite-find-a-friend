@@ -1,9 +1,11 @@
 import { Org } from '@/domain/enterprise/entities/org';
 import { OrgsRepository } from '../../repositories/orgs-repository';
 import { Either } from '@/core/either';
-interface CreateOrgUseCaseRequest {
+interface RegisterOrgUseCaseRequest {
     name: string;
     address: string;
+    email: string;
+    password: string;
     whatsapp: string;
     authorName: string;
     cep: string;
@@ -14,12 +16,12 @@ interface CreateOrgUseCaseRequest {
     latitude: number;
     longitude: number;
 }
-type CreateOrgUseCaseResponse = Either<null, {
+type RegisterOrgUseCaseResponse = Either<null, {
     org: Org;
 }>;
-export declare class CreateOrgUseCase {
+export declare class RegisterOrgUseCase {
     private orgsRepository;
     constructor(orgsRepository: OrgsRepository);
-    execute(request: CreateOrgUseCaseRequest): Promise<CreateOrgUseCaseResponse>;
+    execute(request: RegisterOrgUseCaseRequest): Promise<RegisterOrgUseCaseResponse>;
 }
 export {};

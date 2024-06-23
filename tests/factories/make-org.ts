@@ -16,6 +16,8 @@ export function makeOrg(override: Partial<OrgProps> = {}, id?: UniqueEntityId) {
       state: faker.location.state(),
       street: faker.location.street(),
       whatsapp: faker.phone.number(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
       ...override,
     },
     id,

@@ -14,12 +14,21 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(uuid())
-  name      String
-  email     String  @unique()
-  password  String
-  latitude  Decimal
-  longitude Decimal
+  id           String  @id @default(uuid())
+  name         String
+  email        String  @unique()
+  password     String
+  address      String
+  whatsapp     String
+  authorName   String
+  cep          String
+  state        String
+  city         String
+  neighborhood String
+  street       String
+  latitude     Decimal
+  longitude    Decimal
+  pets         Pet[]
 
   @@map("users")
 }
@@ -43,6 +52,9 @@ model Pet {
 
   createdAt DateTime  @default(now())
   updatedAt DateTime?
+  authorId  String?
+
+  Org User? @relation(fields: [authorId], references: [id])
 
   @@map("pets")
 }

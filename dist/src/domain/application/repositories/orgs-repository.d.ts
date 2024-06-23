@@ -4,7 +4,7 @@ export interface FindManyNearbyParams {
     latitude: number;
     longitude: number;
 }
-export interface OrgsRepository {
-    create(org: Org): Promise<void>;
-    findManyNearby(findManyNearbyParams: FindManyNearbyParams, params: PaginationParams): Promise<Org[]>;
+export declare abstract class OrgsRepository {
+    abstract create(org: Org): Promise<void>;
+    abstract findManyNearby(findManyNearbyParams: FindManyNearbyParams, params: PaginationParams): Promise<Org[]>;
 }

@@ -3,6 +3,8 @@ import { UniqueEntityId } from '@/core/unique-entity-id';
 import { Optional } from '@/@types/optional';
 export interface OrgProps {
     name: string;
+    email: string;
+    password: string;
     address: string;
     whatsapp: string;
     authorName: string;
@@ -20,6 +22,10 @@ export declare class Org extends Entity<OrgProps> {
     static create(props: Optional<OrgProps, 'createdAt'>, id?: UniqueEntityId): Org;
     get name(): string;
     set name(name: string);
+    get email(): string;
+    set email(email: string);
+    get password(): string;
+    set password(password: string);
     get address(): string;
     set address(address: string);
     get whatsapp(): string;

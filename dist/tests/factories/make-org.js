@@ -16,6 +16,8 @@ function makeOrg(override = {}, id) {
         state: faker_1.faker.location.state(),
         street: faker_1.faker.location.street(),
         whatsapp: faker_1.faker.phone.number(),
+        email: faker_1.faker.internet.email(),
+        password: faker_1.faker.internet.password(),
         ...override,
     }, id);
     return org;

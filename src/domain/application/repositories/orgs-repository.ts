@@ -6,10 +6,10 @@ export interface FindManyNearbyParams {
   longitude: number
 }
 
-export interface OrgsRepository {
-  create(org: Org): Promise<void>
+export abstract class OrgsRepository {
+  abstract create(org: Org): Promise<void>
 
-  findManyNearby(
+  abstract findManyNearby(
     findManyNearbyParams: FindManyNearbyParams,
     params: PaginationParams,
   ): Promise<Org[]>

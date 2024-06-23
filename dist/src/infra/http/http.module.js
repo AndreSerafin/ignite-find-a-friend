@@ -8,13 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HttpModule = void 0;
 const common_1 = require("@nestjs/common");
-const get_pet_controller_1 = require("./controllers/get-pet.controller");
+const get_pet_controller_1 = require("./controllers/pet/get-pet.controller");
+const create_account_controller_1 = require("./controllers/account/create-account.controller");
+const create_org_1 = require("../../domain/application/use-cases/org/create-org");
+const database_module_1 = require("../database/database.module");
 let HttpModule = class HttpModule {
 };
 exports.HttpModule = HttpModule;
 exports.HttpModule = HttpModule = __decorate([
     (0, common_1.Module)({
-        controllers: [get_pet_controller_1.GetPetContoller]
+        imports: [database_module_1.DatabaseModule],
+        controllers: [get_pet_controller_1.GetPetContoller, create_account_controller_1.CreateAccountContoller],
+        providers: [create_org_1.RegisterOrgUseCase],
     })
 ], HttpModule);
 //# sourceMappingURL=http.module.js.map

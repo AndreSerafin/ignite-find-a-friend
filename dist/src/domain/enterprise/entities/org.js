@@ -14,6 +14,20 @@ class Org extends entity_1.Entity {
         this.props.name = name;
         this.touch();
     }
+    get email() {
+        return this.props.email;
+    }
+    set email(email) {
+        this.props.email = email;
+        this.touch();
+    }
+    get password() {
+        return this.props.password;
+    }
+    set password(password) {
+        this.props.password = password;
+        this.touch();
+    }
     get address() {
         return this.props.address;
     }
