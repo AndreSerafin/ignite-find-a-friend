@@ -6,5 +6,6 @@ export declare class PrismaOrgsRepository implements OrgsRepository {
     private prisma;
     constructor(prisma: PrismaService);
     create(org: Org): Promise<void>;
+    findByEmail(email: string): Promise<Org | null>;
     findManyNearby({ latitude, longitude }: FindManyNearbyParams, { page }: PaginationParams): Promise<Org[]>;
 }

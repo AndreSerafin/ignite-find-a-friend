@@ -17,6 +17,7 @@ const create_org_1 = require("../../../../domain/application/use-cases/org/creat
 const common_1 = require("@nestjs/common");
 const zod_validation_pipe_1 = require("../../pipes/zod-validation-pipe");
 const zod_1 = require("zod");
+const org_already_exists_error_1 = require("../../../../domain/application/use-cases/org/errors/org-already-exists-error");
 const createAccountBodySchema = zod_1.z.object({
     email: zod_1.z.string().email(),
     password: zod_1.z.string(),
@@ -37,24 +38,18 @@ let CreateAccountContoller = class CreateAccountContoller {
     constructor(registerOrg) {
         this.registerOrg = registerOrg;
     }
-    handle(body) {
-        const { address, authorName, cep, city, email, latitude, longitude, name, neighborhood, password, state, street, whatsapp, } = body;
-        this.registerOrg.execute({
-            address,
-            authorName,
-            cep,
-            city,
-            email,
-            latitude,
-            longitude,
-            name,
-            neighborhood,
-            password,
-            state,
-            street,
-            whatsapp,
-        });
-        return body;
+    async handle(body) {
+        const data = body;
+        const result = await this.registerOrg.execute(data);
+        if (result.isLeft()) {
+            const error = result.value;
+            switch (error.constructor) {
+                case org_already_exists_error_1.OrgAlreadyExistsError:
+                    throw new common_1.ConflictException(error.message);
+                default:
+                    throw new common_1.BadRequestException(error.message);
+            }
+        }
     }
 };
 exports.CreateAccountContoller = CreateAccountContoller;
@@ -64,7 +59,7 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], CreateAccountContoller.prototype, "handle", null);
 exports.CreateAccountContoller = CreateAccountContoller = __decorate([
     (0, common_1.Controller)('/accounts'),

@@ -1,7 +1,9 @@
 import { Org } from '@/domain/enterprise/entities/org'
 import { OrgsRepository } from '../../repositories/orgs-repository'
-import { Either, right } from '@/core/either'
+import { Either, left, right } from '@/core/either'
 import { Injectable } from '@nestjs/common'
+import { OrgAlreadyExistsError } from './errors/org-already-exists-error'
+import { HashGenerator } from '@/domain/cryptography/hash-generator'
 
 interface RegisterOrgUseCaseRequest {
   name: string
@@ -20,7 +22,7 @@ interface RegisterOrgUseCaseRequest {
 }
 
 type RegisterOrgUseCaseResponse = Either<
-  null,
+  OrgAlreadyExistsError,
   {
     org: Org
   }
@@ -28,12 +30,25 @@ type RegisterOrgUseCaseResponse = Either<
 
 @Injectable()
 export class RegisterOrgUseCase {
-  constructor(private orgsRepository: OrgsRepository) {}
+  constructor(
+    private orgsRepository: OrgsRepository,
+    private hashGenerator: HashGenerator,
+  ) {}
 
-  async execute(
-    request: RegisterOrgUseCaseRequest,
-  ): Promise<RegisterOrgUseCaseResponse> {
-    const org = Org.create(request)
+  async execute({
+    email,
+    password,
+    ...request
+  }: RegisterOrgUseCaseRequest): Promise<RegisterOrgUseCaseResponse> {
+    const orgWithSameEmail = await this.orgsRepository.findByEmail(email)
+
+    if (orgWithSameEmail) {
+      return left(new OrgAlreadyExistsError(email))
+    }
+
+    const hashedPassword = await this.hashGenerator.hash(password)
+
+    const org = Org.create({ ...request, email, password: hashedPassword })
 
     await this.orgsRepository.create(org)
 

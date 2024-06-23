@@ -14,13 +14,22 @@ const org_1 = require("../../../enterprise/entities/org");
 const orgs_repository_1 = require("../../repositories/orgs-repository");
 const either_1 = require("../../../../core/either");
 const common_1 = require("@nestjs/common");
+const org_already_exists_error_1 = require("./errors/org-already-exists-error");
+const hash_generator_1 = require("../../../cryptography/hash-generator");
 let RegisterOrgUseCase = class RegisterOrgUseCase {
     orgsRepository;
-    constructor(orgsRepository) {
+    hashGenerator;
+    constructor(orgsRepository, hashGenerator) {
         this.orgsRepository = orgsRepository;
+        this.hashGenerator = hashGenerator;
     }
-    async execute(request) {
-        const org = org_1.Org.create(request);
+    async execute({ email, password, ...request }) {
+        const orgWithSameEmail = await this.orgsRepository.findByEmail(email);
+        if (orgWithSameEmail) {
+            return (0, either_1.left)(new org_already_exists_error_1.OrgAlreadyExistsError(email));
+        }
+        const hashedPassword = await this.hashGenerator.hash(password);
+        const org = org_1.Org.create({ ...request, email, password: hashedPassword });
         await this.orgsRepository.create(org);
         return (0, either_1.right)({ org });
     }
@@ -28,6 +37,7 @@ let RegisterOrgUseCase = class RegisterOrgUseCase {
 exports.RegisterOrgUseCase = RegisterOrgUseCase;
 exports.RegisterOrgUseCase = RegisterOrgUseCase = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [orgs_repository_1.OrgsRepository])
+    __metadata("design:paramtypes", [orgs_repository_1.OrgsRepository,
+        hash_generator_1.HashGenerator])
 ], RegisterOrgUseCase);
 //# sourceMappingURL=create-org.js.map

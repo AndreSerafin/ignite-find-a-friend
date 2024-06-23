@@ -22,6 +22,13 @@ let PrismaOrgsRepository = class PrismaOrgsRepository {
         const data = prisma_orgs_mapper_1.PrismaOrgMapper.toPrisma(org);
         await this.prisma.user.create({ data });
     }
+    async findByEmail(email) {
+        const org = await this.prisma.user.findFirst({ where: { email } });
+        if (!org) {
+            return null;
+        }
+        return prisma_orgs_mapper_1.PrismaOrgMapper.toDomain(org);
+    }
     async findManyNearby({ latitude, longitude }, { page }) {
         const pageSize = 20;
         const offset = (page - 1) * pageSize;

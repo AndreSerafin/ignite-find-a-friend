@@ -15,9 +15,9 @@ declare const createAccountBodySchema: z.ZodObject<{
     latitude: z.ZodNumber;
     longitude: z.ZodNumber;
 }, "strip", z.ZodTypeAny, {
-    name: string;
     email: string;
     password: string;
+    name: string;
     address: string;
     whatsapp: string;
     authorName: string;
@@ -29,9 +29,9 @@ declare const createAccountBodySchema: z.ZodObject<{
     latitude: number;
     longitude: number;
 }, {
-    name: string;
     email: string;
     password: string;
+    name: string;
     address: string;
     whatsapp: string;
     authorName: string;
@@ -47,20 +47,6 @@ type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>;
 export declare class CreateAccountContoller {
     private registerOrg;
     constructor(registerOrg: RegisterOrgUseCase);
-    handle(body: CreateAccountBodySchema): {
-        name: string;
-        email: string;
-        password: string;
-        address: string;
-        whatsapp: string;
-        authorName: string;
-        cep: string;
-        state: string;
-        city: string;
-        neighborhood: string;
-        street: string;
-        latitude: number;
-        longitude: number;
-    };
+    handle(body: CreateAccountBodySchema): Promise<void>;
 }
 export {};

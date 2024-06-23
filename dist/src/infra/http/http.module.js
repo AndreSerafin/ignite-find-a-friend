@@ -12,12 +12,13 @@ const get_pet_controller_1 = require("./controllers/pet/get-pet.controller");
 const create_account_controller_1 = require("./controllers/account/create-account.controller");
 const create_org_1 = require("../../domain/application/use-cases/org/create-org");
 const database_module_1 = require("../database/database.module");
+const cryptography_module_1 = require("../cryptography/cryptography.module");
 let HttpModule = class HttpModule {
 };
 exports.HttpModule = HttpModule;
 exports.HttpModule = HttpModule = __decorate([
     (0, common_1.Module)({
-        imports: [database_module_1.DatabaseModule],
+        imports: [database_module_1.DatabaseModule, cryptography_module_1.CryptographyModule],
         controllers: [get_pet_controller_1.GetPetContoller, create_account_controller_1.CreateAccountContoller],
         providers: [create_org_1.RegisterOrgUseCase],
     })

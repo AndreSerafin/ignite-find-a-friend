@@ -7,6 +7,13 @@ class InMemoryOrgsRepository {
     async create(org) {
         this.items.push(org);
     }
+    async findByEmail(email) {
+        const org = this.items.find((item) => item.email === email);
+        if (!org) {
+            return null;
+        }
+        return org;
+    }
     async findManyNearby(findManyNearbyParams, { page }) {
         const orgs = this.items
             .filter((item) => {

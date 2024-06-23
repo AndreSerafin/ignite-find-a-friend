@@ -1,7 +1,15 @@
 import { RegisterOrgUseCase } from '@/domain/application/use-cases/org/create-org'
-import { Body, Controller, Post, UsePipes } from '@nestjs/common'
+import {
+  BadRequestException,
+  Body,
+  ConflictException,
+  Controller,
+  Post,
+  UsePipes,
+} from '@nestjs/common'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
 import { z } from 'zod'
+import { OrgAlreadyExistsError } from '@/domain/application/use-cases/org/errors/org-already-exists-error'
 
 const createAccountBodySchema = z.object({
   email: z.string().email(),
@@ -26,39 +34,20 @@ export class CreateAccountContoller {
   constructor(private registerOrg: RegisterOrgUseCase) {}
   @Post()
   @UsePipes(new ZodValidationPipe(createAccountBodySchema))
-  handle(@Body() body: CreateAccountBodySchema) {
-    const {
-      address,
-      authorName,
-      cep,
-      city,
-      email,
-      latitude,
-      longitude,
-      name,
-      neighborhood,
-      password,
-      state,
-      street,
-      whatsapp,
-    } = body
+  async handle(@Body() body: CreateAccountBodySchema) {
+    const data = body
 
-    this.registerOrg.execute({
-      address,
-      authorName,
-      cep,
-      city,
-      email,
-      latitude,
-      longitude,
-      name,
-      neighborhood,
-      password,
-      state,
-      street,
-      whatsapp,
-    })
+    const result = await this.registerOrg.execute(data)
 
-    return body
+    if (result.isLeft()) {
+      const error = result.value
+
+      switch (error.constructor) {
+        case OrgAlreadyExistsError:
+          throw new ConflictException(error.message)
+        default:
+          throw new BadRequestException(error.message)
+      }
+    }
   }
 }

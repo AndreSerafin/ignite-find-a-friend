@@ -1,6 +1,8 @@
 import { Org } from '@/domain/enterprise/entities/org';
 import { OrgsRepository } from '../../repositories/orgs-repository';
 import { Either } from '@/core/either';
+import { OrgAlreadyExistsError } from './errors/org-already-exists-error';
+import { HashGenerator } from '@/domain/cryptography/hash-generator';
 interface RegisterOrgUseCaseRequest {
     name: string;
     address: string;
@@ -16,12 +18,13 @@ interface RegisterOrgUseCaseRequest {
     latitude: number;
     longitude: number;
 }
-type RegisterOrgUseCaseResponse = Either<null, {
+type RegisterOrgUseCaseResponse = Either<OrgAlreadyExistsError, {
     org: Org;
 }>;
 export declare class RegisterOrgUseCase {
     private orgsRepository;
-    constructor(orgsRepository: OrgsRepository);
-    execute(request: RegisterOrgUseCaseRequest): Promise<RegisterOrgUseCaseResponse>;
+    private hashGenerator;
+    constructor(orgsRepository: OrgsRepository, hashGenerator: HashGenerator);
+    execute({ email, password, ...request }: RegisterOrgUseCaseRequest): Promise<RegisterOrgUseCaseResponse>;
 }
 export {};

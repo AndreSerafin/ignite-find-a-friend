@@ -19,6 +19,16 @@ export class PrismaOrgsRepository implements OrgsRepository {
     await this.prisma.user.create({ data })
   }
 
+  async findByEmail(email: string): Promise<Org | null> {
+    const org = await this.prisma.user.findFirst({ where: { email } })
+
+    if (!org) {
+      return null
+    }
+
+    return PrismaOrgMapper.toDomain(org)
+  }
+
   async findManyNearby(
     { latitude, longitude }: FindManyNearbyParams,
     { page }: PaginationParams,
