@@ -13,11 +13,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateAccountContoller = void 0;
-const create_org_1 = require("../../../../domain/application/use-cases/org/create-org");
+const register_org_1 = require("../../../../domain/application/use-cases/org/register-org");
 const common_1 = require("@nestjs/common");
 const zod_validation_pipe_1 = require("../../pipes/zod-validation-pipe");
 const zod_1 = require("zod");
 const org_already_exists_error_1 = require("../../../../domain/application/use-cases/org/errors/org-already-exists-error");
+const public_1 = require("../../../auth/public");
 const createAccountBodySchema = zod_1.z.object({
     email: zod_1.z.string().email(),
     password: zod_1.z.string(),
@@ -63,6 +64,7 @@ __decorate([
 ], CreateAccountContoller.prototype, "handle", null);
 exports.CreateAccountContoller = CreateAccountContoller = __decorate([
     (0, common_1.Controller)('/accounts'),
-    __metadata("design:paramtypes", [create_org_1.RegisterOrgUseCase])
+    (0, public_1.Public)(),
+    __metadata("design:paramtypes", [register_org_1.RegisterOrgUseCase])
 ], CreateAccountContoller);
 //# sourceMappingURL=create-account.controller.js.map

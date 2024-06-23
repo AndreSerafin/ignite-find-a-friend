@@ -2,12 +2,13 @@ import { Pet } from '@/domain/enterprise/entities/pet'
 import { UniqueEntityId } from '@/core/unique-entity-id'
 import { PetsRepository } from '../../repositories/pets-repository'
 import { Either, right } from '@/core/either'
+import { Injectable } from '@nestjs/common'
 
 interface CreatePetUseCaseRequest {
   name: string
   specie: string
   age: number
-  size: 0 | 1 | 2
+  size: 'small' | 'medium' | 'big'
   breed: string
   energyLevel: number
   environment: string
@@ -22,6 +23,7 @@ type CreatePetUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class CreatePetUseCase {
   constructor(private petsRepository: PetsRepository) {}
 

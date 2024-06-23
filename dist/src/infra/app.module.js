@@ -12,6 +12,7 @@ const http_module_1 = require("./http/http.module");
 const env_module_1 = require("./env/env.module");
 const config_1 = require("@nestjs/config");
 const env_1 = require("./env/env");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -22,6 +23,7 @@ exports.AppModule = AppModule = __decorate([
                 validate: (env) => env_1.envSchema.parse(env),
                 isGlobal: true,
             }),
+            auth_module_1.AuthModule,
             http_module_1.HttpModule,
             env_module_1.EnvModule,
         ],

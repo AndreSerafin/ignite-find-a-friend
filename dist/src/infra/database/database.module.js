@@ -11,6 +11,8 @@ const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("./prisma/prisma.service");
 const orgs_repository_1 = require("../../domain/application/repositories/orgs-repository");
 const prisma_orgs_repository_1 = require("./prisma/repositories/prisma-orgs-repository");
+const pets_repository_1 = require("../../domain/application/repositories/pets-repository");
+const prisma_pets_repository_1 = require("./prisma/repositories/prisma-pets-repository");
 let DatabaseModule = class DatabaseModule {
 };
 exports.DatabaseModule = DatabaseModule;
@@ -19,8 +21,9 @@ exports.DatabaseModule = DatabaseModule = __decorate([
         providers: [
             prisma_service_1.PrismaService,
             { provide: orgs_repository_1.OrgsRepository, useClass: prisma_orgs_repository_1.PrismaOrgsRepository },
+            { provide: pets_repository_1.PetsRepository, useClass: prisma_pets_repository_1.PrismaPetsRepository },
         ],
-        exports: [prisma_service_1.PrismaService, orgs_repository_1.OrgsRepository],
+        exports: [prisma_service_1.PrismaService, orgs_repository_1.OrgsRepository, pets_repository_1.PetsRepository],
     })
 ], DatabaseModule);
 //# sourceMappingURL=database.module.js.map

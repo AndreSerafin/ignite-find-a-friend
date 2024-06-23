@@ -2,12 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Pet = void 0;
 const entity_1 = require("../../../core/entity");
-var Size;
-(function (Size) {
-    Size[Size["SMALL"] = 0] = "SMALL";
-    Size[Size["MEDIUM"] = 1] = "MEDIUM";
-    Size[Size["BIG"] = 2] = "BIG";
-})(Size || (Size = {}));
 class Pet extends entity_1.Entity {
     static create(props, id) {
         const pet = new Pet({ ...props, createdAt: props.createdAt ?? new Date() }, id);

@@ -5,20 +5,26 @@ export interface FilterParams {
   search?: string
   specie?: string
   age?: number
-  size?: number
+  city?: string
+  size?: 'small' | 'medium' | 'big'
   breed?: string
   energyLevel?: number
   environment?: string
 }
 
-export interface PetsRepository {
-  create(pet: Pet): Promise<void>
+export abstract class PetsRepository {
+  abstract create(pet: Pet): Promise<void>
 
-  findManyByOrgId(
+  abstract findMany(
+    paginationParams: PaginationParams,
+    filterParams?: FilterParams,
+  ): Promise<Pet[]>
+
+  abstract findManyByOrgId(
     orgId: string,
     paginationParams: PaginationParams,
     filterParams?: FilterParams,
   ): Promise<Pet[]>
 
-  getById(petId: string): Promise<Pet | null>
+  abstract getById(petId: string): Promise<Pet | null>
 }

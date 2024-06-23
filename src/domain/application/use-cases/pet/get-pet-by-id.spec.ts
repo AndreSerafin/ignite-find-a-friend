@@ -1,6 +1,6 @@
-import { InMemoryPetsRepository } from 'tests/repositories/in-memory-pets-repository'
+import { InMemoryPetsRepository } from 'test/repositories/in-memory-pets-repository'
 import { GetPetByIdUseCase } from './get-pet-by-id'
-import { makePet } from 'tests/factories/make-pet'
+import { makePet } from 'test/factories/make-pet'
 import { UniqueEntityId } from '@/core/unique-entity-id'
 
 let inMemoryPetsRepository: InMemoryPetsRepository

@@ -2,17 +2,11 @@ import { Entity } from '@/core/entity'
 import { UniqueEntityId } from '@/core/unique-entity-id'
 import { Optional } from '@/@types/optional'
 
-enum Size {
-  SMALL,
-  MEDIUM,
-  BIG,
-}
-
 export interface PetProps {
   name: string
   specie: string
   age: number
-  size: Size
+  size: 'small' | 'medium' | 'big'
   breed: string
   energyLevel: number
   environment: string
@@ -20,7 +14,7 @@ export interface PetProps {
   authorId: UniqueEntityId
 
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 
 export class Pet extends Entity<PetProps> {
@@ -67,7 +61,7 @@ export class Pet extends Entity<PetProps> {
     return this.props.size
   }
 
-  set size(size: Size) {
+  set size(size: 'small' | 'medium' | 'big') {
     this.props.size = size
     this.touch()
   }

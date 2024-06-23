@@ -1,4 +1,4 @@
-import { InMemoryPetsRepository } from 'tests/repositories/in-memory-pets-repository'
+import { InMemoryPetsRepository } from 'test/repositories/in-memory-pets-repository'
 import { CreatePetUseCase } from './create-pet'
 import { faker } from '@faker-js/faker'
 
@@ -19,7 +19,7 @@ describe('Create pet use case', () => {
       authorId: 'org-01',
       energyLevel: 3,
       environment: 'Ambiente amplo',
-      size: 2,
+      size: 'small',
       specie: 'Dog',
       breed: 'Shih tzu',
     })

@@ -1,6 +1,6 @@
-import { InMemoryOrgsRepository } from 'tests/repositories/in-memory-orgs-repository'
+import { InMemoryOrgsRepository } from 'test/repositories/in-memory-orgs-repository'
 import { FetchOrgsNearbyIdUseCase } from './fetch-orgs-nearby'
-import { makeOrg } from 'tests/factories/make-org'
+import { makeOrg } from 'test/factories/make-org'
 
 let inMemoryOrgsRepository: InMemoryOrgsRepository
 let sut: FetchOrgsNearbyIdUseCase

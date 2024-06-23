@@ -33,18 +33,12 @@ model User {
   @@map("users")
 }
 
-enum Size {
-  SMALL
-  MEDIUM
-  BIG
-}
-
 model Pet {
   id          String @id @default(uuid())
   name        String
   specie      String
   age         Int
-  size        Size
+  size        String
   breed       String
   energyLevel Int
   environment String
@@ -52,9 +46,9 @@ model Pet {
 
   createdAt DateTime  @default(now())
   updatedAt DateTime?
-  authorId  String?
+  authorId  String
 
-  Org User? @relation(fields: [authorId], references: [id])
+  org User? @relation(fields: [authorId], references: [id])
 
   @@map("pets")
 }
