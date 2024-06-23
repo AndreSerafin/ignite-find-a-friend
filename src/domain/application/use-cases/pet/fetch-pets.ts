@@ -3,7 +3,7 @@ import { PetsRepository } from '../../repositories/pets-repository'
 import { Either, right } from '@/core/either'
 import { Injectable } from '@nestjs/common'
 
-interface FilterParams {
+export interface FilterParams {
   search?: string
   specie?: string
   age?: number

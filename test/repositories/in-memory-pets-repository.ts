@@ -3,9 +3,11 @@ import {
   FilterParams,
   PetsRepository,
 } from '@/domain/application/repositories/pets-repository'
+import { Org } from '@/domain/enterprise/entities/org'
 import { Pet } from '@/domain/enterprise/entities/pet'
 
 export class InMemoryPetsRepository implements PetsRepository {
+  public orgs: Org[] = []
   public items: Pet[] = []
 
   async create(pet: Pet): Promise<void> {
@@ -16,7 +18,7 @@ export class InMemoryPetsRepository implements PetsRepository {
     { page }: PaginationParams,
     filterParams: FilterParams = {},
   ): Promise<Pet[]> {
-    const { age, breed, energyLevel, environment, search, size, specie } =
+    const { age, breed, energyLevel, environment, search, size, specie, city } =
       filterParams
 
     const filters = (item: Pet) =>
@@ -28,7 +30,12 @@ export class InMemoryPetsRepository implements PetsRepository {
         ? item.name.includes(search) || item.about.includes(search)
         : true) &&
       (size !== undefined ? item.size === size : true) &&
-      (specie ? item.specie === specie : true)
+      (specie ? item.specie === specie : true) &&
+      (city
+        ? this.orgs.find(
+            (org) => org.city === city && org.id.equals(item.authorId),
+          )
+        : true)
 
     const pets = this.items.filter(filters).slice((page - 1) * 20, page * 20)
 
