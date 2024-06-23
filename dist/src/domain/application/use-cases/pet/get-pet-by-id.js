@@ -9,7 +9,7 @@ class GetPetByIdUseCase {
         this.petsRepository = petsRepository;
     }
     async execute({ petId, }) {
-        const pet = await this.petsRepository.getById(petId);
+        const pet = await this.petsRepository.findById(petId);
         if (!pet) {
             return (0, either_1.left)(new resource_not_found_error_1.ResourceNotFoundError());
         }

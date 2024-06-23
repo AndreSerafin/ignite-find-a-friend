@@ -20,7 +20,7 @@ export class GetPetByIdUseCase {
   async execute({
     petId,
   }: GetPetByIdUseCaseRequest): Promise<GetPetByIdUseCaseResponse> {
-    const pet = await this.petsRepository.getById(petId)
+    const pet = await this.petsRepository.findById(petId)
 
     if (!pet) {
       return left(new ResourceNotFoundError())

@@ -15,6 +15,8 @@ export interface FilterParams {
 export abstract class PetsRepository {
   abstract create(pet: Pet): Promise<void>
 
+  abstract save(pet: Pet): Promise<void>
+
   abstract findMany(
     paginationParams: PaginationParams,
     filterParams?: FilterParams,
@@ -26,5 +28,5 @@ export abstract class PetsRepository {
     filterParams?: FilterParams,
   ): Promise<Pet[]>
 
-  abstract getById(petId: string): Promise<Pet | null>
+  abstract findById(petId: string): Promise<Pet | null>
 }

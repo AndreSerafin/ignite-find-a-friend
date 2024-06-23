@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  HttpCode,
   Post,
   UsePipes,
 } from '@nestjs/common'
@@ -32,6 +33,7 @@ export class CreatePetContoller {
 
   @Post()
   @UsePipes()
+  @HttpCode(201)
   async handle(
     @Body(bodyValidationPipe) body: CreatePetBodySchema,
     @CurrentUser() user: UserPayload,

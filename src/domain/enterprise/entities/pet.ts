@@ -27,6 +27,19 @@ export class Pet extends Entity<PetProps> {
     return pet
   }
 
+  update(pet: Partial<PetProps>) {
+    this.props.about = pet.about ?? this.about
+    this.props.age = pet.age ?? this.age
+    this.props.breed = pet.breed ?? this.breed
+    this.props.energyLevel = pet.energyLevel ?? this.energyLevel
+    this.props.environment = pet.environment ?? this.environment
+    this.props.name = pet.name ?? this.name
+    this.props.size = pet.size ?? this.size
+    this.props.specie = pet.specie ?? this.specie
+
+    this.touch()
+  }
+
   get authorId() {
     return this.props.authorId
   }

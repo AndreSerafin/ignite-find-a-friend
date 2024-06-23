@@ -11,10 +11,19 @@ import { PrismaPetMapper } from '../mappers/prisma-pets-mapper'
 @Injectable()
 export class PrismaPetsRepository implements PetsRepository {
   constructor(private prisma: PrismaService) {}
+
   async create(pet: Pet): Promise<void> {
     const data = PrismaPetMapper.toPrisma(pet)
 
     await this.prisma.pet.create({ data })
+  }
+
+  async save(pet: Pet): Promise<void> {
+    const data = PrismaPetMapper.toPrisma(pet)
+    await this.prisma.pet.update({
+      where: { id: pet.id.toString() },
+      data,
+    })
   }
 
   async findMany(
@@ -87,7 +96,7 @@ export class PrismaPetsRepository implements PetsRepository {
     return data.map(PrismaPetMapper.toDomain)
   }
 
-  async getById(petId: string): Promise<Pet | null> {
+  async findById(petId: string): Promise<Pet | null> {
     const data = await this.prisma.pet.findFirst({ where: { id: petId } })
 
     if (!data) {

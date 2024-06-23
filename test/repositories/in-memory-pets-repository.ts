@@ -69,7 +69,7 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pets
   }
 
-  async getById(petId: string): Promise<Pet | null> {
+  async findById(petId: string): Promise<Pet | null> {
     const pet = this.items.find((item) => item.id.toString() === petId)
 
     if (!pet) {
@@ -77,5 +77,11 @@ export class InMemoryPetsRepository implements PetsRepository {
     }
 
     return pet
+  }
+
+  async save(pet: Pet): Promise<void> {
+    const petIndex = this.items.findIndex((item) => item.id.equals(pet.id))
+
+    this.items[petIndex] = pet
   }
 }
