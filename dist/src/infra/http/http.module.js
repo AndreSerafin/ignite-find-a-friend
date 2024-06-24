@@ -22,6 +22,8 @@ const fetch_pets_by_org_id_1 = require("../../domain/application/use-cases/pet/f
 const fetch_pets_by_org_id_controller_1 = require("./controllers/pet/fetch-pets-by-org-id.controller");
 const edit_pet_controller_1 = require("./controllers/pet/edit-pet.controller");
 const edit_pet_1 = require("../../domain/application/use-cases/pet/edit-pet");
+const delete_pet_controller_1 = require("./controllers/pet/delete-pet.controller");
+const delete_pet_1 = require("../../domain/application/use-cases/pet/delete-pet");
 let HttpModule = class HttpModule {
 };
 exports.HttpModule = HttpModule;
@@ -35,6 +37,7 @@ exports.HttpModule = HttpModule = __decorate([
             fetch_pets_controller_1.FetchPetsContoller,
             fetch_pets_by_org_id_controller_1.FetchPetsByOrgIdContoller,
             edit_pet_controller_1.EditPetContoller,
+            delete_pet_controller_1.DeletePetContoller,
         ],
         providers: [
             register_org_1.RegisterOrgUseCase,
@@ -43,6 +46,7 @@ exports.HttpModule = HttpModule = __decorate([
             fetch_pets_1.FetchPetsUseCase,
             fetch_pets_by_org_id_1.FetchPetsByOrgIdUseCase,
             edit_pet_1.EditPetUseCase,
+            delete_pet_1.DeletePetUseCase,
         ],
     })
 ], HttpModule);

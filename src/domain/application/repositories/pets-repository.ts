@@ -17,6 +17,8 @@ export abstract class PetsRepository {
 
   abstract save(pet: Pet): Promise<void>
 
+  abstract delete(pet: Pet): Promise<void>
+
   abstract findMany(
     paginationParams: PaginationParams,
     filterParams?: FilterParams,

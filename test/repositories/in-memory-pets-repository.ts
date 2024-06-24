@@ -14,6 +14,18 @@ export class InMemoryPetsRepository implements PetsRepository {
     this.items.push(pet)
   }
 
+  async save(pet: Pet): Promise<void> {
+    const petIndex = this.items.findIndex((item) => item.id.equals(pet.id))
+
+    this.items[petIndex] = pet
+  }
+
+  async delete(pet: Pet): Promise<void> {
+    const petIndex = this.items.findIndex((item) => item.id.equals(pet.id))
+
+    this.items.splice(petIndex)
+  }
+
   async findMany(
     { page }: PaginationParams,
     filterParams: FilterParams = {},
@@ -77,11 +89,5 @@ export class InMemoryPetsRepository implements PetsRepository {
     }
 
     return pet
-  }
-
-  async save(pet: Pet): Promise<void> {
-    const petIndex = this.items.findIndex((item) => item.id.equals(pet.id))
-
-    this.items[petIndex] = pet
   }
 }

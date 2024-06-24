@@ -5,20 +5,12 @@ import { Injectable } from '@nestjs/common'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 
-interface EditPetUseCaseRequest {
+interface DeletePetUseCaseRequest {
   petId: string
   authorId: string
-  name?: string
-  specie?: string
-  age?: number
-  size?: 'small' | 'medium' | 'big'
-  breed?: string
-  energyLevel?: number
-  environment?: string
-  about?: string
 }
 
-type EditPetUseCaseResponse = Either<
+type DeletePetUseCaseResponse = Either<
   ResourceNotFoundError | NotAllowedError,
   {
     pet: Pet
@@ -26,14 +18,13 @@ type EditPetUseCaseResponse = Either<
 >
 
 @Injectable()
-export class EditPetUseCase {
+export class DeletePetUseCase {
   constructor(private petsRepository: PetsRepository) {}
 
   async execute({
     petId,
     authorId,
-    ...rest
-  }: EditPetUseCaseRequest): Promise<EditPetUseCaseResponse> {
+  }: DeletePetUseCaseRequest): Promise<DeletePetUseCaseResponse> {
     const pet = await this.petsRepository.findById(petId)
 
     if (!pet) {
@@ -44,9 +35,7 @@ export class EditPetUseCase {
       return left(new NotAllowedError())
     }
 
-    pet.update({ ...rest })
-
-    await this.petsRepository.save(pet)
+    await this.petsRepository.delete(pet)
 
     return right({ pet })
   }

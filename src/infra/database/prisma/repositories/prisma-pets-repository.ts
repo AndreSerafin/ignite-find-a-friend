@@ -18,6 +18,12 @@ export class PrismaPetsRepository implements PetsRepository {
     await this.prisma.pet.create({ data })
   }
 
+  async delete(pet: Pet): Promise<void> {
+    await this.prisma.pet.delete({
+      where: { id: pet.id.toString() },
+    })
+  }
+
   async save(pet: Pet): Promise<void> {
     const data = PrismaPetMapper.toPrisma(pet)
     await this.prisma.pet.update({
