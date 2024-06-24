@@ -15,6 +15,8 @@ import { EditPetContoller } from './controllers/pet/edit-pet.controller'
 import { EditPetUseCase } from '@/domain/application/use-cases/pet/edit-pet'
 import { DeletePetContoller } from './controllers/pet/delete-pet.controller'
 import { DeletePetUseCase } from '@/domain/application/use-cases/pet/delete-pet'
+import { GetPetByIdUseCase } from '@/domain/application/use-cases/pet/get-pet-by-id'
+import { GetPetByIdContoller } from './controllers/pet/get-pet-by-id.controller'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -26,6 +28,7 @@ import { DeletePetUseCase } from '@/domain/application/use-cases/pet/delete-pet'
     FetchPetsByOrgIdContoller,
     EditPetContoller,
     DeletePetContoller,
+    GetPetByIdContoller,
   ],
   providers: [
     RegisterOrgUseCase,
@@ -35,6 +38,7 @@ import { DeletePetUseCase } from '@/domain/application/use-cases/pet/delete-pet'
     FetchPetsByOrgIdUseCase,
     EditPetUseCase,
     DeletePetUseCase,
+    GetPetByIdUseCase,
   ],
 })
 export class HttpModule {}

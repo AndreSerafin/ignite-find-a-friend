@@ -13,13 +13,18 @@ describe('Get pet by id use case', () => {
   })
 
   it('should be able get a pet by id', async () => {
-    inMemoryPetsRepository.items.push(makePet({}, new UniqueEntityId('pet-01')))
+    inMemoryPetsRepository.items.push(
+      makePet(
+        { name: 'Bolota', authorId: new UniqueEntityId('org-01') },
+        new UniqueEntityId('pet-01'),
+      ),
+    )
 
-    const result = await sut.execute({ petId: 'pet-01' })
+    const result = await sut.execute({ petId: 'pet-01', authorId: 'org-01' })
 
     expect(result.isRight()).toBeTruthy()
     expect(result.value).toMatchObject({
-      pet: expect.objectContaining({ _id: { value: 'pet-01' } }),
+      pet: expect.objectContaining({ name: 'Bolota' }),
     })
   })
 })
