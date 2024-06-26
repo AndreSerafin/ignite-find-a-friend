@@ -7,17 +7,13 @@ import {
   UsePipes,
 } from '@nestjs/common'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
-import { z } from 'zod'
 import { AuthenticateOrgUseCase } from '@/domain/application/use-cases/org/authenticate-org'
 import { WrongCredentialError } from '@/domain/application/use-cases/org/errors/wrong-credentials-error'
 import { Public } from '@/infra/auth/public'
-
-const authenticateBodySchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-})
-
-type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>
+import {
+  AuthenticateBodySchema,
+  authenticateBodySchema,
+} from './dto/authenticate'
 
 @Controller('/session')
 @Public()
