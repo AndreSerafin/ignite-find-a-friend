@@ -4,13 +4,18 @@ import { RegisterOrgUseCase } from '@/domain/application/use-cases/org/register-
 import { Module } from '@nestjs/common'
 import { CryptographyModule } from '../cryptography/cryptography.module'
 import { DatabaseModule } from '../database/database.module'
-import { AuthenticateContoller } from './modules/session/authenticate.controller'
 import { PetModule } from './modules/pet/pet.module'
 import { AccountModule } from './modules/account/account.module'
+import { AuthenticateModule } from './modules/session/authenticate..module'
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule, PetModule, AccountModule],
-  controllers: [AuthenticateContoller],
+  imports: [
+    DatabaseModule,
+    CryptographyModule,
+    PetModule,
+    AccountModule,
+    AuthenticateModule,
+  ],
   providers: [RegisterOrgUseCase, AuthenticateOrgUseCase],
 })
 export class HttpModule {}

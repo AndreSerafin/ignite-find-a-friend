@@ -15,13 +15,13 @@ import {
   authenticateBodySchema,
 } from './dto/authenticate'
 
-@Controller('/session')
+@Controller('/sessions')
 @Public()
 export class AuthenticateContoller {
   constructor(private authenticateOrg: AuthenticateOrgUseCase) {}
   @Post()
   @UsePipes(new ZodValidationPipe(authenticateBodySchema))
-  async handle(@Body() body: AuthenticateBodySchema) {
+  async authenticate(@Body() body: AuthenticateBodySchema) {
     const data = body
 
     const result = await this.authenticateOrg.execute(data)
